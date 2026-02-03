@@ -434,42 +434,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
-              {/* Presets Section */}
-              {/* <div className="mt-6">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                  <span>⚡</span>
-                  Quick Presets
-                </h3>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                  {presets.map((preset) => (
-                    <button
-                      key={preset.name}
-                      onClick={() => {
-                        preset.action();
-                        showToast(`${preset.name} applied`, preset.icon);
-                        setActivePreset(preset.name);
-                        setTimeout(() => setActivePreset(null), 1000);
-                      }}
-                      className={`group relative p-4 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95 ${
-                        activePreset === preset.name
-                          ? "ring-4 ring-blue-500/30 transform scale-105"
-                          : "hover:shadow-lg"
-                      }`}
-                    >
-                      <div
-                        className={`absolute inset-0 rounded-xl bg-gradient-to-br ${preset.color} opacity-10 group-hover:opacity-20 transition-opacity`}
-                      ></div>
-                      <div className="relative">
-                        <div className="text-2xl mb-2">{preset.icon}</div>
-                        <div className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                          {preset.name}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div> */}
             </div>
 
             {/* Sidebar - Tools & Stats */}
