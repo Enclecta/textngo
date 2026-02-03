@@ -37,7 +37,8 @@ export default function Home() {
     readingTime: 0,
   });
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
+  const [mode, setMode] = useState<"simple" | "ai">("simple");
+  const [aiLoading, setAiLoading] = useState(false);
   // Set mounted to true when component mounts on client
   useEffect(() => {
     setMounted(true);
@@ -52,7 +53,7 @@ export default function Home() {
       setDarkMode(savedMode === "true");
     } else {
       const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
+        "(prefers-color-scheme: dark)",
       ).matches;
       setDarkMode(prefersDark);
     }
@@ -158,7 +159,7 @@ export default function Home() {
       setActivePreset(name);
       setTimeout(() => setActivePreset(null), 1000);
     },
-    [showToast]
+    [showToast],
   );
 
   const clearText = () => {
@@ -173,8 +174,8 @@ export default function Home() {
       action: () =>
         setText(
           toSentenceCase(
-            removeExtraSpaces(removeEmojis(removeLineBreaks(text)))
-          )
+            removeExtraSpaces(removeEmojis(removeLineBreaks(text))),
+          ),
         ),
       icon: "🤖",
       color: "from-purple-500 to-pink-500",
@@ -245,6 +246,34 @@ export default function Home() {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+  };
+
+  const runAI = async (endpoint: string) => {
+    if (!text.trim()) {
+      showToast("Enter text first", "⚠️");
+      return;
+    }
+
+    try {
+      setAiLoading(true);
+      showToast("AI is working...", "🤖");
+
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      setText(data.result);
+      showToast("AI applied successfully", "✨");
+    } catch {
+      showToast("AI failed. Try again.", "❌");
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   // Focus textarea on mount
@@ -319,6 +348,30 @@ export default function Home() {
                 </span>
               </div>
             </div>
+
+            <div className="mt-4 inline-flex items-center gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl">
+              <button
+                onClick={() => setMode("simple")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  mode === "simple"
+                    ? "bg-white dark:bg-gray-900 shadow text-blue-600"
+                    : "text-gray-600 dark:text-gray-400"
+                }`}
+              >
+                Simple Mode
+              </button>
+
+              <button
+                onClick={() => setMode("ai")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  mode === "ai"
+                    ? "bg-white dark:bg-gray-900 shadow text-purple-600"
+                    : "text-gray-600 dark:text-gray-400"
+                }`}
+              >
+                AI Mode
+              </button>
+            </div>
           </header>
 
           {/* Main Content Area */}
@@ -383,7 +436,7 @@ export default function Home() {
               </div>
 
               {/* Presets Section */}
-              <div className="mt-6">
+              {/* <div className="mt-6">
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                   <span>⚡</span>
                   Quick Presets
@@ -416,59 +469,17 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Sidebar - Tools & Stats */}
-            <div className="lg:col-span-1 space-y-6">
-              {/* Stats Card */}
-              <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                  <span>📊</span>
-                  Text Statistics
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-xl">
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                      {stats.words}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      Words
-                    </div>
-                  </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 rounded-xl">
-                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                      {stats.characters}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      Characters
-                    </div>
-                  </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 rounded-xl">
-                    <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-                      {stats.lines}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      Lines
-                    </div>
-                  </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 rounded-xl">
-                    <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                      {stats.readingTime}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                      Min Read
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Text Actions */}
+            {mode === "simple" && (
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                   <span>✨</span>
                   Text Actions
                 </h3>
+
                 <div className="grid grid-cols-2 gap-3">
                   {textActions.map((action) => (
                     <button
@@ -480,9 +491,7 @@ export default function Home() {
                       className="group p-3 text-left rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:shadow-md"
                     >
                       <div className="flex items-center gap-2">
-                        <span className="text-lg group-hover:scale-110 transition-transform">
-                          {action.icon}
-                        </span>
+                        <span className="text-lg">{action.icon}</span>
                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                           {action.name}
                         </span>
@@ -491,44 +500,46 @@ export default function Home() {
                   ))}
                 </div>
               </div>
+            )}
 
-              {/* Share & Feedback */}
-              <div className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl p-6 border border-gray-200 dark:border-gray-700">
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-                  Share & Feedback
+            {mode === "ai" && (
+              <div className="bg-gradient-to-br from-indigo-50 to-white dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl p-6 border border-indigo-200 dark:border-gray-700">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                  <span>🤖</span>
+                  AI Actions
                 </h3>
-                <div className="space-y-4">
+
+                <div className="space-y-3">
                   <button
-                    onClick={shareTool}
-                    className="w-full p-3 bg-gradient-to-r from-gray-800 to-gray-900 dark:from-gray-700 dark:to-gray-800 hover:from-gray-900 hover:to-gray-950 text-white rounded-lg font-medium transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2"
+                    disabled={aiLoading}
+                    onClick={() => runAI("/api/ai/rewrite")}
+                    className="w-full px-4 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-all disabled:opacity-50"
                   >
-                    <span>🔗</span>
-                    Share This Tool
+                    Rewrite – Professional
                   </button>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Have suggestions?
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        value={feedback}
-                        onChange={(e) => setFeedback(e.target.value)}
-                        placeholder="Your idea or feedback..."
-                        className="flex-1 px-4 py-2 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:bg-gray-900/50 transition-colors text-gray-800 dark:text-gray-100"
-                        onKeyDown={(e) => e.key === "Enter" && submitFeedback()}
-                      />
-                      <button
-                        onClick={submitFeedback}
-                        className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-lg font-medium transition-all duration-300"
-                      >
-                        Send
-                      </button>
-                    </div>
-                  </div>
+                  <button
+                    disabled={aiLoading}
+                    onClick={() => runAI("/api/ai/fix-grammar")}
+                    className="w-full px-4 py-3 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-medium transition-all disabled:opacity-50"
+                  >
+                    Fix Grammar & Clarity
+                  </button>
+
+                  <button
+                    disabled={aiLoading}
+                    onClick={() => runAI("/api/ai/resume-optimize")}
+                    className="w-full px-4 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition-all disabled:opacity-50"
+                  >
+                    Resume Optimizer
+                  </button>
                 </div>
+
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
+                  AI rewrites text intelligently while preserving meaning.
+                </p>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Footer */}
