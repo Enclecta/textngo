@@ -70,6 +70,22 @@ const removeNumbers = (t: string) => t.replace(/\d/g, "");
 const removeSpecialChars = (t: string) => t.replace(/[^\w\s]/g, "");
 const toCamelCase = (t: string) =>
   t.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
+const normalizeCodeIndentation = (t: string) => {
+  const lines = t.replace(/\r\n/g, "\n").split("\n");
+  const nonEmptyLines = lines.filter((line) => line.trim().length > 0);
+
+  if (nonEmptyLines.length === 0) return "";
+
+  const minIndent = nonEmptyLines.reduce((smallest, line) => {
+    const indent = line.match(/^[\t ]*/)?.[0].length ?? 0;
+    return Math.min(smallest, indent);
+  }, Number.POSITIVE_INFINITY);
+
+  return lines
+    .map((line) => line.slice(Math.min(minIndent, line.length)).replace(/\s+$/g, ""))
+    .join("\n")
+    .trim();
+};
 
 /* ---------------- COMPONENT ---------------- */
 export default function Home() {
@@ -256,7 +272,7 @@ export default function Home() {
     },
     {
       name: "Code Format",
-      action: () => setText(text.replace(/^\s+/gm, "").trim()),
+      action: () => setText(normalizeCodeIndentation(text)),
       icon: <Code className="w-5 h-5" />,
       color: "from-gray-600 to-gray-800",
     },
@@ -319,6 +335,11 @@ export default function Home() {
       action: () => removeSpecialChars,
       icon: <Hash className="w-4 h-4" />,
     },
+    {
+      name: "Normalize Indent",
+      action: () => normalizeCodeIndentation,
+      icon: <Code className="w-4 h-4" />,
+    },
   ];
 
   /* ---------- Tool of the day ---------- */
@@ -327,7 +348,7 @@ export default function Home() {
     "Email Formatter",
     "Resume Optimizer",
     "Social Media Prep",
-    "Code Cleaner",
+    "Code Formatter",
     "Text Normalizer",
     "Case Converter",
   ];
@@ -561,7 +582,7 @@ export default function Home() {
                     ref={textareaRef}
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    placeholder="Paste or type your text here..."
+                    placeholder="Paste your text or code here..."
                     className="w-full h-[200px] sm:h-[250px] md:h-[300px] p-3 sm:p-5 border-2 border-gray-200 dark:border-gray-700 rounded-lg sm:rounded-xl resize-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 text-gray-800 dark:text-gray-100 dark:bg-gray-900/50 placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 font-mono text-sm sm:text-base leading-relaxed"
                   />
                 </div>
@@ -710,6 +731,19 @@ export default function Home() {
                   <div className="space-y-3">
                     <button
                       disabled={aiLoading}
+                      onClick={() => runAI("/api/ai/format-code")}
+                      className="w-full px-4 py-3 rounded-lg bg-slate-700 hover:bg-slate-800 text-white font-medium transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
+                    >
+                      {aiLoading ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <Code className="w-4 h-4" />
+                      )}
+                      Format Code
+                    </button>
+
+                    <button
+                      disabled={aiLoading}
                       onClick={() => runAI("/api/ai/rewrite")}
                       className="w-full px-4 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
                     >
@@ -750,7 +784,7 @@ export default function Home() {
 
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 flex items-center gap-2">
                     <Bot className="w-3 h-3" />
-                    AI rewrites text intelligently while preserving meaning.
+                    AI can also reformat pasted code without changing its logic.
                   </p>
                 </div>
               )}
@@ -807,6 +841,19 @@ export default function Home() {
                       <div className="space-y-2">
                         <button
                           disabled={aiLoading}
+                          onClick={() => runAI("/api/ai/format-code")}
+                          className="w-full px-4 py-3 rounded-lg bg-slate-700 hover:bg-slate-800 text-white font-medium transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
+                        >
+                          {aiLoading ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Code className="w-4 h-4" />
+                          )}
+                          Format Code
+                        </button>
+
+                        <button
+                          disabled={aiLoading}
                           onClick={() => runAI("/api/ai/rewrite")}
                           className="w-full px-4 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
                         >
@@ -847,7 +894,7 @@ export default function Home() {
 
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 flex items-center gap-2">
                         <Bot className="w-3 h-3" />
-                        AI rewrites text intelligently while preserving meaning.
+                        AI can also reformat pasted code without changing its logic.
                       </p>
                     </div>
                   )}
