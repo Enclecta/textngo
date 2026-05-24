@@ -34,3 +34,25 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Deploy on a VPS with domain
+
+To expose this app as `textngo.in` and `www.textngo.in`, do the following:
+
+1. DNS setup
+   - Add an `A` record for `textngo.in` pointing to your VPS IP.
+   - Add an `A` record for `www.textngo.in` pointing to your VPS IP.
+
+2. Run Docker Compose
+   - `docker compose up --build -d`
+   - The app listens on host port `3002` by default.
+
+3. Nginx reverse proxy example
+   - Use the provided `nginx-textngo.conf` and proxy to `http://127.0.0.1:3002`.
+   - Reload Nginx after adding the config.
+
+4. Enable HTTPS
+   - Use Certbot or your preferred ACME client for `textngo.in` and `www.textngo.in`.
+   - Keep certificates renewed automatically.
+
+> Your app already has `metadataBase: new URL("https://textngo.in")` configured in `app/layout.tsx`, so it is ready for this domain setup.
