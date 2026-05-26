@@ -42,18 +42,16 @@ export default function TermsPage() {
 
       <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-orange-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-          {/* Header */}
           <div className="text-center mb-10">
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-600 to-red-600 dark:from-orange-400 dark:to-red-400 bg-clip-text text-transparent mb-4">
               Terms & Conditions
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Last Updated: December 2023
+              Last Updated: May 26, 2026
             </p>
           </div>
 
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-gray-200 dark:border-gray-700">
-            {/* Introduction */}
             <div className="mb-10">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl">
@@ -64,19 +62,18 @@ export default function TermsPage() {
                     Terms of Service
                   </h2>
                   <p className="text-gray-600 dark:text-gray-400 mt-1">
-                    Please read these terms carefully before using Copy & Go
+                    Please read these terms carefully before using TextnGo
                   </p>
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Welcome to Copy & Go. By accessing and using our text formatting
+                Welcome to TextnGo. By accessing and using our text formatting
                 service, you agree to be bound by these Terms & Conditions. If
                 you disagree with any part of these terms, please do not use our
                 service.
               </p>
             </div>
 
-            {/* Important Notice */}
             <div className="mb-10 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 p-6 rounded-xl border border-red-100 dark:border-red-800/30">
               <h3 className="text-xl font-bold text-red-700 dark:text-red-300 mb-4 flex items-center gap-2">
                 ⚠️ Important Legal Notice
@@ -101,26 +98,25 @@ export default function TermsPage() {
               </ul>
             </div>
 
-            {/* Terms Sections */}
             <div className="space-y-10">
               {[
                 {
                   number: "1",
                   title: "Acceptance of Terms",
                   content:
-                    "By accessing and using Copy & Go, you accept and agree to be bound by these Terms. If you disagree with any part of these terms, please do not use our service.",
+                    "By accessing and using TextnGo, you accept and agree to be bound by these Terms. If you disagree with any part of these terms, please do not use our service.",
                 },
                 {
                   number: "2",
                   title: "Service Description",
                   content:
-                    "Copy & Go is a free web-based text formatting tool provided 'as-is' without warranties of any kind. We reserve the right to modify or discontinue the service at any time without notice.",
+                    "TextnGo is a free web-based text formatting tool provided 'as-is' without warranties of any kind. We reserve the right to modify or discontinue the service at any time without notice.",
                 },
                 {
                   number: "3",
                   title: "User Responsibilities",
                   content:
-                    "You agree to use the service lawfully and ethically. You will not use Copy & Go for: spam, harassment, illegal activities, or any purpose that violates others' rights.",
+                    "You agree to use the service lawfully and ethically. You will not use TextnGo for spam, harassment, illegal activities, or any purpose that violates others' rights.",
                   points: [
                     "You retain all rights to text you process",
                     "You are responsible for your text content",
@@ -132,7 +128,7 @@ export default function TermsPage() {
                   number: "4",
                   title: "Intellectual Property",
                   content:
-                    "The Copy & Go platform, including its design, code, features, and branding, is the property of Enclecta. You may not copy, modify, or distribute any part of the service without written permission.",
+                    "The TextnGo platform, including its design, code, features, and branding, is the property of Enclecta. You may not copy, modify, or distribute any part of the service without written permission.",
                 },
                 {
                   number: "5",
@@ -164,7 +160,7 @@ export default function TermsPage() {
                   number: "9",
                   title: "Changes to Terms",
                   content:
-                    "We may revise these Terms at any time. By continuing to use the service after changes are posted, you accept the revised Terms. We will update the 'Last Updated' date when changes occur.",
+                    "We may revise these Terms at any time. By continuing to use the service after changes are posted, you accept the revised Terms. We will update the Last Updated date when changes occur.",
                 },
                 {
                   number: "10",
@@ -216,7 +212,6 @@ export default function TermsPage() {
               ))}
             </div>
 
-            {/* User Acknowledgement */}
             <div className="mt-12 bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/30">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-blue-500 rounded-lg">
@@ -227,7 +222,7 @@ export default function TermsPage() {
                     User Acknowledgement
                   </h3>
                   <p className="text-gray-700 dark:text-gray-300">
-                    By using Copy & Go, you acknowledge that you have read,
+                    By using TextnGo, you acknowledge that you have read,
                     understood, and agree to be bound by these Terms &
                     Conditions. These Terms constitute the entire agreement
                     between you and Enclecta regarding your use of the service.
@@ -236,7 +231,6 @@ export default function TermsPage() {
               </div>
             </div>
 
-            {/* Contact Information */}
             <div className="mt-10 text-center pt-6 border-t border-gray-200 dark:border-gray-700">
               <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
                 Contact Information
@@ -252,7 +246,7 @@ export default function TermsPage() {
                   ⚖️ legal@enclecta.com
                 </a>
                 <Link
-                  href="/privacy"
+                  href="/privacy-policy"
                   className="px-6 py-3 border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-all duration-300"
                 >
                   🔒 View Privacy Policy
@@ -261,7 +255,6 @@ export default function TermsPage() {
             </div>
           </div>
 
-          {/* Back to Home */}
           <div className="mt-8 text-center">
             <Link
               href="/"

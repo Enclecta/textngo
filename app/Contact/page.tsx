@@ -14,7 +14,6 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Initialize
   useEffect(() => {
     setMounted(true);
     const savedMode = localStorage.getItem("darkMode");
@@ -23,7 +22,6 @@ export default function ContactPage() {
     }
   }, []);
 
-  // Apply dark mode
   useEffect(() => {
     if (!mounted) return;
     if (darkMode) {
@@ -37,10 +35,10 @@ export default function ContactPage() {
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    if (status) setStatus(""); // Clear status when user types
+    if (status) setStatus("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,26 +55,7 @@ export default function ContactPage() {
     }
 
     setIsSubmitting(true);
-
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // In production, you would:
-    // try {
-    //   const response = await fetch('/api/contact', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(form),
-    //   });
-    //   if (response.ok) {
-    //     setStatus("Thanks for contacting us! We'll get back to you soon.");
-    //     setForm({ name: "", email: "", message: "" });
-    //   } else {
-    //     setStatus("Something went wrong. Please try again.");
-    //   }
-    // } catch (error) {
-    //   setStatus("Network error. Please check your connection.");
-    // }
 
     setStatus("Thanks for contacting us! We'll get back to you soon.");
     setForm({ name: "", email: "", message: "" });
@@ -93,7 +72,7 @@ export default function ContactPage() {
     {
       icon: "🕒",
       title: "Response Time",
-      value: "24–48 hours",
+      value: "24-48 hours",
       description: "Typical response time",
     },
     {
@@ -118,19 +97,17 @@ export default function ContactPage() {
 
       <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-          {/* Header */}
           <div className="text-center mb-10">
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-4">
               Contact Us
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Have feedback, questions, or business inquiries? We'd love to hear
-              from you.
+              Have feedback, questions, or business inquiries? We&apos;d love to
+              hear from you.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Contact Information */}
             <div className="lg:col-span-1 space-y-6">
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2">
@@ -160,7 +137,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Quick Tips */}
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-2xl p-6 border border-blue-200 dark:border-blue-800/30">
                 <h3 className="font-semibold text-blue-700 dark:text-blue-300 mb-3 flex items-center gap-2">
                   <span>💡</span>
@@ -177,21 +153,20 @@ export default function ContactPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span>•</span>
-                    <span>We don't store your message data</span>
+                    <span>We don&apos;t store your message data</span>
                   </li>
                 </ul>
               </div>
             </div>
 
-            {/* Contact Form */}
             <div className="lg:col-span-2">
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 md:p-8 border border-gray-200 dark:border-gray-700">
                 <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
                   Send us a Message
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-8">
-                  Fill out the form below and we'll get back to you as soon as
-                  possible.
+                  Fill out the form below and we&apos;ll get back to you as soon
+                  as possible.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">

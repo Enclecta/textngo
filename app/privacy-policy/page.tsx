@@ -48,7 +48,7 @@ export default function PrivacyPolicyPage() {
               Privacy Policy
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Last Updated: December 2023
+              Last Updated: May 26, 2026
             </p>
           </div>
 
@@ -64,15 +64,16 @@ export default function PrivacyPolicyPage() {
                     Your Privacy Matters
                   </h2>
                   <p className="text-gray-600 dark:text-gray-400 mt-1">
-                    At Copy & Go, we're committed to protecting your privacy
+                    At TextnGo, we&apos;re committed to protecting your privacy
                   </p>
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                This Privacy Policy explains how Copy & Go ("we", "our", or
-                "us") collects, uses, and protects your information when you use
-                our text formatting service. We take your privacy seriously and
-                are transparent about our practices.
+                This Privacy Policy explains how TextnGo (&quot;we&quot;,
+                &quot;our&quot;, or &quot;us&quot;) collects, uses, and protects
+                your information when you use our text formatting service. We
+                take your privacy seriously and are transparent about our
+                practices.
               </p>
             </div>
 

@@ -126,6 +126,9 @@ export const metadata: Metadata = {
     },
   },
   manifest: "/manifest.webmanifest",
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+  },
 };
 
 export const viewport: Viewport = {
@@ -183,11 +186,13 @@ export default function RootLayout({
           `}
         </Script>
 
-        <script
+        <Script
+          id="google-adsense"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7211795627084856"
           crossOrigin="anonymous"
-        ></script>
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
