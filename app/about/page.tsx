@@ -15,10 +15,10 @@ export default function About() {
 
       <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl p-6 space-y-5">
         <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-          In today&apos;s fast-paced digital world, people work with text every day:
-          emails, resumes, code snippets, social media captions, AI outputs, and
-          more. TextnGo was created to remove friction from these everyday
-          tasks.
+          In today&apos;s fast-paced digital world, people work with text every
+          day: emails, resumes, code snippets, social media captions, AI
+          outputs, and more. TextnGo was created to remove friction from these
+          everyday tasks.
         </p>
 
         <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
