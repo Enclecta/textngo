@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+// Ignore missing type declarations for side-effect CSS import in this file
+// TypeScript may complain if there's no global declaration for '*.css'
+// @ts-ignore
 import "./globals.css";
 
 const geistSans = Geist({
@@ -179,6 +182,12 @@ export default function RootLayout({
             });
           `}
         </Script>
+
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7211795627084856"
+          crossOrigin="anonymous"
+        ></script>
       </body>
     </html>
   );
