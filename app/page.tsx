@@ -506,6 +506,17 @@ export default function Home() {
             </div>
           </header>
 
+          <section className="mb-4 sm:mb-6 rounded-2xl border border-gray-200 bg-white/90 p-4 shadow-sm backdrop-blur dark:border-gray-700 dark:bg-gray-800/80">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              AI Text Formatter, Cleaner, Grammar Fixer and Resume Optimizer
+            </h1>
+            <p className="mt-3 max-w-4xl text-sm leading-6 text-gray-600 dark:text-gray-300 sm:text-base">
+              TextnGo helps you clean messy text, rewrite content
+              professionally, fix grammar, optimize resumes, remove extra
+              spaces, and format content for email, social media, and code.
+            </p>
+          </section>
+
           {/* Quick Actions Bar - Now below header */}
           <div className="flex flex-wrap items-center justify-between gap-2 mb-4 bg-white dark:bg-gray-800 p-2 rounded-xl shadow-md">
             <div className="flex items-center gap-2">
